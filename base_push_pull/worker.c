@@ -62,7 +62,7 @@ int main (int argc, char const *argv[]) {
 		zmq_msg_send(&message, sender, 0);
 		zmq_msg_close(&message);
 		count++;
-		//sleep(1);
+		sleep(1);
 	}
 	zmq_close(receiver);
 	zmq_close(sender);

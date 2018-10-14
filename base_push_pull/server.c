@@ -29,11 +29,11 @@ int main (int argc, char const *argv[]) {
 	// Generate some random numbers.
 	srandom((unsigned) time(NULL));
 	// Send the tasks.
-	int count;
+	int count = 1;
 	int msec = 0;
 	int load;
 	char string[10];
-	for(count = 0; count < 100; count++) {
+	for(;count < 100;) {
 		load = (int) ((double) (100) * random () / RAND_MAX);
 		msec += load;
 		sprintf(string, "%d", load);
@@ -45,6 +45,7 @@ int main (int argc, char const *argv[]) {
 		#endif
 		zmq_msg_send(&message,socket,0);
 		zmq_msg_close(&message);
+		count++;
 	}
 	printf("Total: %d msec\n", msec);
 	//sleep(1);

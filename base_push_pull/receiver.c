@@ -18,9 +18,9 @@ int main (int argc, char const *argv[]) {
 	zmq_msg_close(&reply);
 	printf("%s\n",msg);
 	free(msg);
-	int count;
+	int count = 1;
 	char* value;
-	for(count = 0; count < 100; count++) {
+	for(;;) {
 		zmq_msg_init(&reply);
 		zmq_msg_recv(&reply, receiver, 0);
 		length = zmq_msg_size(&reply);
@@ -28,9 +28,10 @@ int main (int argc, char const *argv[]) {
 		bzero(value,length + 1);
 		memcpy(value, zmq_msg_data(&reply), length);
 		zmq_msg_close(&reply);
-		printf("%s : %d\n",value,count+1);
+		printf("%s : %d\n",value,count);
 		fflush(stdout);
 		free(value);
+		count++;
 	}
 	zmq_close(receiver);
 	zmq_ctx_destroy(context);
